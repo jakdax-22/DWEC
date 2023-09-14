@@ -1,12 +1,92 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
+
     "tasks": [
-        {
-            "label": "echo",
-            "type": "shell",
-            "command": "echo Hello"
-        }
+
+    {
+
+    "label": "Abrir en Brave",
+
+    "command": "explorer",
+
+    "windows": {
+
+    "command": "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
+
+    },
+
+    "args": [
+
+    "${file}"
+
+    ],
+
+    "presentation": {
+
+    "reveal": "never"
+
+    },
+
+    "problemMatcher": []
+
+    },
+
+    {
+
+    "label": "Abrir en Opera",
+
+    "command": "explorer",
+
+    "windows": {
+
+    "command": "C:/Users/enriq/AppData/Local/Programs/Opera/opera.exe"
+
+    },
+
+    "args": [
+
+    "${file}"
+
+    ],
+
+    "presentation": {
+
+    "reveal": "never"
+
+    },
+
+    "problemMatcher": []
+
+    },
+    {
+
+        "label": "Abrir en Chrome",
+    
+        "command": "explorer",
+    
+        "windows": {
+    
+        "command": "C:/Program Files/Google/Chrome/Application/chrome.exe"
+    
+        },
+    
+        "args": [
+    
+        "${file}"
+    
+        ],
+    
+        "presentation": {
+    
+        "reveal": "never"
+    
+        },
+    
+        "problemMatcher": []
+    
+        },
+
     ]
+
+
 }
