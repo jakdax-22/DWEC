@@ -1,0 +1,17 @@
+header {
+    height: 250 px;
+    background-color: aquamarine;
+    text-align: center;
+}
+
+header.h1 {
+    color: red;
+}
+
+p,h2,h3 {
+    color: bisque;
+}
+
+.titulo {
+    color: red;
+}
