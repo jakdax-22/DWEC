@@ -6,11 +6,13 @@ do {
 while (isNaN(argumento));
 let espacios = "";
 
-for (let i = 0; i< argumento * 3; i++){
+for (let i = 0; i< argumento * 7; i++){
     espacios+="&nbsp";
 }
 for (let i = 0; i<= argumento; i++){
+    espacios = "&nbsp".repeat((argumento - i) * 7 - 5)
     document.write(espacios+"___<br>");
-    espacios -= "&nbsp&nbsp&nbsp"
-    document.write(espacios+"|<br>"+espacios+"|<br>"+espacios);
+    espacios = "&nbsp".repeat((argumento - i) * 7 - 5);
+    document.write(espacios+"|<br>"+espacios+"|<br>");
+
 }
