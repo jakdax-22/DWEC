@@ -17,3 +17,12 @@ for (let i = 1; i <=argumento; i+=2){
     document.write("<br>");
 
 }
+espacios += "&nbsp".repeat(argumento/2 + 1);
+for (let i = argumento-2; i >= 1 - 2;i-=2){
+    document.write(espacios);
+    for (let j = 0;j<i;j++){
+        document.write("*");
+    }
+    document.write("<br>");
+    espacios +="&nbsp&nbsp";
+}

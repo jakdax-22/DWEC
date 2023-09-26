@@ -10,7 +10,7 @@ for (let i = argumento; i >= 1; i-=2){
     for (let j = 0;j<i;j++){
         document.write("*");
     }
-    espacios +=" ";
+    espacios +="&nbsp&nbsp";
     document.write("<br>" + espacios);
 
 }
