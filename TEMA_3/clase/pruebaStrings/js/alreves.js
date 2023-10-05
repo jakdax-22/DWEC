@@ -10,8 +10,6 @@ let funcionIzquierda = function () {
         clearInterval(intervalo);
         intervalo = setInterval(funcionIzquierda,500);
 }
-izquierda.addEventListener('click',funcionIzquierda)
-
 let funcionDerecha = function () {
     texto = `${texto[texto.length - 1]}${texto.slice(0,texto.length -1)}`;
     document.title = texto;
@@ -19,8 +17,8 @@ let funcionDerecha = function () {
     intervalo = setInterval(funcionDerecha,500);
 }
 
+izquierda.addEventListener('click',funcionIzquierda)
 derecha.addEventListener('click',funcionDerecha);
-
 document.getElementById('stop').addEventListener('click', function(){
     clearInterval(intervalo);
 })
