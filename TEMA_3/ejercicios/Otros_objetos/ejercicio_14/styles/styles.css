@@ -1,0 +1,14 @@
+table {
+	width: 50%; 
+    border-collapse: collapse; 
+}
+table td, table tr, table th {
+	border: 1px solid black;
+	text-align: center;
+}
+table caption {
+	font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    background-color:#0AF983;
+}
