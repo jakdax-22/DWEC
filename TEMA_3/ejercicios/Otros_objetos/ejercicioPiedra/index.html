@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/styles.css"
+
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td colspan="3" id="titulo"><h1>Piedra Papel o Tijera</h1></td>
+        </tr>
+        <tr>
+            <td><img src="./images/piedra.png" class="imagenes" id="piedra"></td>
+            <td><img src="./images/papel.png" class="imagenes" id="papel"></td>
+            <td><img src="./images/tijeras.png" class="imagenes" id="tijeras"></td>
+        </tr>
+        <tr>
+            <td>Tu elección <br>
+                <img src="" id="imagenElegida" class="imagenes" style="display:none"></td>
+            <td>
+                <form id="form">
+                    <input type="button" id="jugar" value="jugar">
+                </form>
+            </td>
+            <td>Elección oponente<br>
+                <img src="" id="imagenOponente" class="imagenes" style="display:none">
+            </td>
+            
+
+        </tr>
+        <tr>
+            <td colspan="3" id="mostrar" style="display:none"><p id="mensaje"></p><img src="" id="resultado"/></td>
+        </tr>
+    </table>
+</body>
+<script src="scripts/01.js"></script>
+
+</html>

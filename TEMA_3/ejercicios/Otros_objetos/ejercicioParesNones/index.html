@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .imagenes {
+        width: 170px; 
+        height: 170px;
+    }
+    form{
+        text-align: center;
+    }
+    #boton-jugar {
+        font-size: 15px;
+        width: 90px;
+    }
+    #titulo{
+        text-align: center;
+    }
+    </style>
+
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td colspan="6" id="titulo"><h1>PARES O NONES</h1></td>
+        </tr>
+        <tr>
+            <td><img src="img/0.jpg" class="imagenes" id="numero-0"></td>
+            <td><img src="img/1.jpg" class="imagenes" id="numero-1"></td>
+            <td><img src="img/2.jpg" class="imagenes" id="numero-2"></td>
+            <td><img src="img/3.jpg" class="imagenes" id="numero-3"></td>
+            <td><img src="img/4.jpg" class="imagenes" id="numero-4"></td>
+            <td><img src="img/5.jpg" class="imagenes" id="numero-5"></td>
+
+        </tr>
+        <tr>
+            <td colspan="2"><img src="" id="imagenElegida"></td>
+            <td colspan="2">
+                <form id="form">
+                    <fieldset>
+                        <legend>Elige pares o nones</legend>
+                        <input type="radio" name="eleccion" id="pares" value="pares">
+                        <label for="pares">Pares</label>
+                        <input type="radio" name="eleccion" id="nones" value="nones">
+                        <label for="nones">Nones</label>
+
+                    </fieldset>
+                    <input type="button" id="jugar" value="jugar">
+                </form>
+            </td>
+            <td>Elección oponente</td>
+            
+            <td><img src="" id="imagenOponente"></td>
+
+        </tr>
+        <tr>
+            <td id="textoResultado">Resultado:</td>
+            <td><img src="" id="imagenResultado"></td>
+            <td colspan="2"></td>
+            <td id="ganador">Ganador:</td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+<script src="js/script.js"></script>
+
+</html>
