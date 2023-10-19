@@ -1,6 +1,6 @@
 'use strict';
 
-window.addEventListener('load', ()=> {
+window.addEventListener('DOMContentLoaded', ()=> {
     let array = [];
     let aprincipio = document.getElementById('aprincipio');
     let afinal = document.getElementById('afinal');

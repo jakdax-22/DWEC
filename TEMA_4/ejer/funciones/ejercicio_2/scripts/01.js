@@ -1,13 +1,12 @@
-let nombres = [];
-let longitudes = [];
-let nombre = "";
+window.addEventListener('load',()=>{
+    const letras = ["T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E"];
+    const numeros = document.getElementById('contenido');
+    const letra = document.getElementById('resultado');
 
-while (nombre !== "fin"){
-    nombre=prompt("Dime un nombre");
-    nombres.push(nombre);
-    longitudes.push(nombre.length)
-}
-nombres.pop();
-for (let i = 0; i < nombres.length;i++){
-    document.write(nombres[i]+" => "+longitudes[i]+"<br>");
+    document.getElementById('calcular').addEventListener('click',()=>{
+            letra.value=letras[calcularLetra(numeros.value)];
+    });
+});
+function calcularLetra (numeros) {
+    return Math.floor (numeros % 23);
 }
