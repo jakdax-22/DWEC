@@ -1,7 +1,5 @@
 'use strict';
 const array = [];
-const sumacolum = [];
-sumacolum[0] = 0;
 let suma=0;
 for (let i = 0; i <= 9; i++ ){
     array [i] = [];
