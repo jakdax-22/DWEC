@@ -86,6 +86,13 @@ const bulbasaur = {
 const getMoves = ({moves})=>{
     console.log(moves);
 }
+const getWeaknesses = ({modifiers:{weakness}}) => {
+    console.log(weakness);
+}
+const getResistances = ({modifiers:{resistances}}) => {
+    console.log(resistances);
+}
+
 const getPrimaryAbility = ({ability:{primary}})=>{
     console.log(primary);
 }
@@ -95,6 +102,21 @@ const resistType = (tipo,{modifiers:{resistances}}) => {
     }
     return false;
 }
-getMoves(squirtle);
+const isWeakAgainst = ({ attacker, attacked }) => {
+    const attackerType = attacker.type; // Suponiendo que cada objeto Pokémon tiene una propiedad 'type' que indica su tipo
+    const attackedType = attacked.type;
+
+    // Verificar si el tipo del atacante tiene debilidad contra el tipo del atacado
+    if (typeWeaknesses[attackerType] && typeWeaknesses[attackerType].includes(attackedType)) {
+        return true; // El atacante es débil contra el tipo del atacado
+    }
+
+    return false; // El atacante no es débil contra el tipo del atacado
+};
+const battleResult = isWeakAgainst({ attacker: pikachu, attacked: squirtle });
+
+/*getMoves(squirtle);
 getPrimaryAbility(squirtle);
 console.log(resistType("pepe",squirtle));
+getWeaknesses(squirtle);*/
+getResistances(squirtle);
