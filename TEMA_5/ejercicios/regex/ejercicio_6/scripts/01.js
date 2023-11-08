@@ -1,4 +1,4 @@
-let regex = /(perro|perra|tigre|tigresa)/;
+let regex = /(perr[oa]|tigre(sa)?)/;
 console.log(regex.test("hola perro a"));
 console.log(regex.test("perra"));
 console.log(regex.test("hola tigre a"));
