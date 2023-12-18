@@ -2,7 +2,10 @@
 window.addEventListener('load',()=>{
     let tabla = document.createElement("table");
     tabla.id = "tabla";
-    tabla.style.border="1px solid red";
+    tabla.style.backgroundImage="url(./images/hierba.jpg)";
+    tabla.style.margin = "50px auto";
+    tabla.style.width = "500px";
+    tabla.style.height = "500px";
     document.body.appendChild(tabla);
     let accederTabla = document.getElementById("tabla");
     let valores = document.cookie.split("; ");
@@ -22,9 +25,16 @@ window.addEventListener('load',()=>{
         accederTabla.appendChild(filatabla);
         for (let j = 0; j < columna; j++){
             let columnatabla = document.createElement("td");
+            columnatabla.id = "c"+ parseInt(fila * i + j);
+            console.log(columnatabla);
             document.getElementById("f"+i).appendChild(columnatabla);
-            columnatabla.textContent = "Topo";
-            columnatabla.style.border = "1px solid red";
+            let imagen = document.createElement("img");
+            imagen.src = "./images/topo.png";
+            imagen.style.height = "100px";
+            imagen.style.cursor = "pointer";
+            imagen.style.width = "100px";
+            imagen.style.width = "100px";
+            columnatabla.appendChild(imagen);
         }
     }
     
