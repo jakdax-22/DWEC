@@ -1,19 +1,20 @@
 'use strict';
 
-function Topo (){
+function Topo (madriguera,fila,columna){
     this.tiempoDeVida = Math.random() * (3 - 1.5) + 1.5;
     this.tiempoDeVida = parseFloat(this.tiempoDeVida.toFixed(1));
-}
-Topo.prototype.IniciarVida = function (madriguera){
-    const intervalo = setInterval(()=>{
+    this.intervalo = setInterval(()=>{
         if (this.tiempoDeVida <= 0){
-            madriguera.numeroDeVidas = madriguera.numeroDeVidas --;
+            madriguera.numeroDeVidas--;
             madriguera.mostrar();
-            this.eliminarTopo(intervalo);
+            clearInterval(this.intervalo);
         }
-        this.tiempoDeVida = this.tiempoDeVida - 0.5;
-    },500)
+        this.tiempoDeVida-=0.5;
+    },500);
+    this.fila = fila;
+    this.columna = columna;
 }
-Topo.prototype.eliminarTopo = function (intervalo){
-    clearInterval(intervalo);
+Topo.prototype.eliminarTopo = function (madriguera){
+    document.getElementById("c"+ parseInt(madriguera.columnas * this.fila + this.columna)).firstChild.src="./images/topo.png";
+    clearInterval(this.intervalo);
 }

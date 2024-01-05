@@ -3,6 +3,9 @@ function Madriguera(filas,columnas){
     this.numeroDeVidas = 3;
     this.puntuacion = 0;
     this.tablero = [];
+    this.filas = filas;
+    this.intervalo = null;
+    this.columnas = columnas;
     for (let i = 0; i < filas; i++){
         this.tablero[i] = [];
         for (let j = 0; j < columnas; j++){
@@ -18,25 +21,30 @@ Madriguera.prototype.mostrar = function(){
             if (this.tablero[i] [j] instanceof Topo ){
                 if (this.tablero [i] [j].tiempoDeVida <= 2)
                     document.getElementById("c"+ parseInt(this.tablero[i].length * i + j)).firstChild.src="./images/topo2.jpg";
-                else
-                    document.getElementById("c"+ parseInt(this.tablero[i].length * i + j)).firstChild.src="./images/topo.png";
             }    
         }
     }
+    let celdas = document.getElementsByTagName("td");
+    for (let celda of celdas) {
+        celda.parametros = this;
+        celda.addEventListener("click", this.manejar);
+    }
+}
+Madriguera.prototype.manejar = function (ev) {
+    this.parametros.matarTopo(ev.currentTarget.parentElement.rowIndex, ev.currentTarget.cellIndex);
 }
 Madriguera.prototype.IniciarPartida = function (){
-    const intervalo = setInterval(()=>{
+    this.intervalo = setInterval(()=>{
         let posibilidades = Math.floor (Math.random () * (2));
         if (posibilidades == 1){
-            const topo = new Topo();
             let i = 0;
             let creado = false;
             while (i < 10 && !creado){
                 i++;
-                let fila = Math.random () * (this.tablero.length);
-                let columna = Math.random () * (this.tablero[fila].length);
+                let fila = Math.floor(Math.random () * (this.filas));
+                let columna = Math.floor(Math.random () * (this.columnas));
                 if (this.buscarVecinos(fila,columna)){
-                    this.tablero [fila][columna] = new Topo();
+                    this.tablero [fila][columna] = new Topo(this,fila,columna);
                     creado = true;
                 }
             }
@@ -44,7 +52,7 @@ Madriguera.prototype.IniciarPartida = function (){
         else{
 
         }
-        for (let i = 0; i < this.tablero.length; i++){
+        /*for (let i = 0; i < this.tablero.length; i++){
             for (let j = 0; j < this.tablero[i].length;j++){
                 if (tablero[i][j] instanceof Topo){
                     if (tablero[i][j].tiempoDeVida <= 0){
@@ -52,8 +60,34 @@ Madriguera.prototype.IniciarPartida = function (){
                     }
                 }
             }
+        }*/
+        this.mostrar();
+        if (this.numeroDeVidas == 0){
+            this.pararPartida();
         }
     },200)
+}
+Madriguera.prototype.pararPartida = function(){
+    /*for (let fila of this.tablero){
+        for (let columna of this.tablero[fila]){
+            if (this.tablero [fila] [columna] instanceof Topo){
+                this.tablero [fila] [columna].eliminarTopo(this);
+            }
+        }
+    }*/
+    clearInterval(this.intervalo);
+    let celdas = document.getElementsByTagName("td");
+    for (let celda of celdas) {
+        celda.removeEventListener("click", this.manejar);
+    }
+}
+Madriguera.prototype.matarTopo = function (fila, columna) {
+    if (this.tablero[fila][columna] instanceof Topo) {
+        this.tablero[fila][columna].eliminarTopo(this);
+        this.puntuacion++;
+        this.tablero[fila][columna] = '';
+        this.mostrar();
+    }
 }
 Madriguera.prototype.buscarVecinos= function (fila,columna){
     for (let j = fila - 1; j < fila + 2; j++){

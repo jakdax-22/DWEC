@@ -26,7 +26,7 @@ window.addEventListener('load',()=>{
         for (let j = 0; j < columna; j++){
             let columnatabla = document.createElement("td");
             columnatabla.id = "c"+ parseInt(fila * i + j);
-            console.log(columnatabla);
+            columnatabla.parametros = this;
             document.getElementById("f"+i).appendChild(columnatabla);
             let imagen = document.createElement("img");
             imagen.src = "./images/topo.png";
@@ -37,5 +37,18 @@ window.addEventListener('load',()=>{
             columnatabla.appendChild(imagen);
         }
     }
+    const madriguera = new Madriguera(fila, columna);  
+    document.getElementById("iniciar").addEventListener("click", () => {
+      if(madriguera.numeroDeVidas>0){
+        madriguera.IniciarPartida();
+      }else{
+        alert("No tienes vidas");
+      }
+    
+    })
+    document.getElementById("parar").addEventListener("click", () => {
+      madriguera.pararPartida();
+      alert("Has parado la partida");
+    })
     
 })
