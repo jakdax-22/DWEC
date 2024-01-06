@@ -63,23 +63,21 @@ Madriguera.prototype.IniciarPartida = function (){
         }*/
         this.mostrar();
         if (this.numeroDeVidas == 0){
+            let celdas = document.getElementsByTagName("td");
+            for (let celda of celdas){
+                celda.firstChild.src="./images/topo.png";
+            }
             this.pararPartida();
         }
     },200)
 }
 Madriguera.prototype.pararPartida = function(){
-    /*for (let fila of this.tablero){
-        for (let columna of this.tablero[fila]){
-            if (this.tablero [fila] [columna] instanceof Topo){
-                this.tablero [fila] [columna].eliminarTopo(this);
-            }
-        }
-    }*/
     clearInterval(this.intervalo);
     let celdas = document.getElementsByTagName("td");
     for (let celda of celdas) {
         celda.removeEventListener("click", this.manejar);
     }
+    alert ("Has perdido");
 }
 Madriguera.prototype.matarTopo = function (fila, columna) {
     if (this.tablero[fila][columna] instanceof Topo) {

@@ -6,7 +6,7 @@ function Topo (madriguera,fila,columna){
     this.intervalo = setInterval(()=>{
         if (this.tiempoDeVida <= 0){
             madriguera.numeroDeVidas--;
-            madriguera.mostrar();
+            this.eliminarTopo(madriguera);
             clearInterval(this.intervalo);
         }
         this.tiempoDeVida-=0.5;
