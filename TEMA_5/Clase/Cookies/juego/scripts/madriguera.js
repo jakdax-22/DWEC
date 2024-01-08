@@ -69,7 +69,7 @@ Madriguera.prototype.IniciarPartida = function (){
             }
             this.pararPartida();
         }
-    },200)
+    },500)
 }
 Madriguera.prototype.pararPartida = function(){
     clearInterval(this.intervalo);

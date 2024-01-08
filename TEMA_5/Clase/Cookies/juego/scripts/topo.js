@@ -7,7 +7,6 @@ function Topo (madriguera,fila,columna){
         if (this.tiempoDeVida <= 0){
             madriguera.numeroDeVidas--;
             this.eliminarTopo(madriguera);
-            clearInterval(this.intervalo);
         }
         this.tiempoDeVida-=0.5;
     },500);
