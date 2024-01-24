@@ -23,9 +23,27 @@ window.addEventListener('DOMContentLoaded', () => {
         imagen.addEventListener('load',eventoCarga);
         imagen.addEventListener('error',eventoError);
     };
-    //window.scrollTo(0,0);
+});
+window.addEventListener('load',()=>{
+    function eventoCarga () {
+        progreso.value+=20;
+            if (progreso.value >= 100){
+                cargando.style.display = "none";
+                divimagenes.style.display = "block"
+            }
+        }
+        function eventoError () {
+            progreso.value+=20;
+                if (progreso.value >= 100){
+                    cargando.style.display = "none";
+                    divimagenes.style.display = "block"
+                }
+        }
+    let progreso = document.getElementById("progreso");
+    let cargando = document.getElementById("cargando");
+    let divimagenes = document.getElementById("imagenes");
     window.addEventListener('scroll',()=>{
-        if (window.scrollY+document.documentElement.clientHeight >= document.body.clientHeight){
+        if (window.scrollY+document.documentElement.clientHeight >= document.body.clientHeight * 0.9){
             progreso.value = 0;
             divimagenes.style.display = "none";
             cargando.style.display="block";
@@ -43,5 +61,6 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
     })
+    window.scrollTo(0,0);
 
 });
