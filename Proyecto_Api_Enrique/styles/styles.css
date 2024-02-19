@@ -66,6 +66,7 @@ header div input {
     grid-template-rows: auto;
 }
 .resultado-cartas{
+    margin-right: 7%;
     margin-top:10%;
     justify-self: center;
     display: grid;
@@ -195,6 +196,7 @@ footer{
     margin-top: 5%;
 }
 .carta {
+    cursor: pointer;
     width: 150%;
     height: 100%;
 }
@@ -205,6 +207,7 @@ footer{
     justify-items: center;
 }
 .footergaleria {
+    justify-self: center;
     margin-top: 10%;
     color: lightslategray;
     font-size:40px;
@@ -256,4 +259,101 @@ footer{
     color: #000;
     cursor:pointer;
   }
-
+.contenedorInfoCarta {
+    display:grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+    justify-items: center;
+}
+.tituloInfoCarta{
+    font-size:25px;
+    border-bottom:2px solid black;
+}
+.divInfoCarta{
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    font-size:20px;
+}
+.divInfoCarta div span {
+    color: lightskyblue;
+}
+.check{
+    display:flex;
+    flex-direction: row;
+    justify-items: center;
+    gap: 10%;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+header div{
+    display: flex;
+    flex-direction: row;
+    gap:20%;
+}
+.favoritos{
+    font-size: 35px;
+    margin-top: 18%;
+    cursor: pointer;
+}
+.contenedorfavoritos{
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns:  auto;
+    justify-items: center;
+}
+.titulofavoritos{
+    border-bottom: 1px solid black;
+}
+  
