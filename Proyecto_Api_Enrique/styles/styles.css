@@ -45,6 +45,7 @@ body{
     margin-top:-2%;
     width: 35%;
     margin-left:3%;
+    cursor:pointer;
 }
 header div{
     margin-top: 1%;
@@ -270,6 +271,8 @@ footer{
     border-bottom:2px solid black;
 }
 .divInfoCarta{
+    margin-left:15%;
+    margin-right:10%;
     margin-top: 10%;
     display: flex;
     flex-direction: column;
@@ -356,4 +359,68 @@ header div{
 .titulofavoritos{
     border-bottom: 1px solid black;
 }
+.divBusqueda{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    justify-items: center;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    width: 60%; 
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    overflow: hidden; 
+  }
+  
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .search-button {
+    border: none;
+    background-color: transparent;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  .divResultadoBusqueda{
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto;
+    background-color: white;
+    width:60%;
+    cursor:pointer;
+    justify-items: center;
+    align-items: center;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  }
+  .divResultadoBusqueda:hover{
+    background-color: #2196F3;
+  }
+  .divResultadoBusqueda img{
+    width:60%;
+    height:60%;
+  }
+  .divDescripcion{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .divNoFavs{
+    text-align: center;
+    margin-top:10%;
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 25px;
+    justify-content: center;
+  }
+
+  
+  
   

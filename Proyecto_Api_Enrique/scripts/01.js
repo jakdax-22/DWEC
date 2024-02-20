@@ -242,17 +242,12 @@ window.addEventListener('load',() =>{
         })
     }
     //Funcion para el despliegue de las cartas en pantalla
-    function despliegueCartas (resultado,pagina,cargando=true,numcartas=24){
+    function despliegueCartas (resultado,pagina,numcartas,cargando=true){
         //Esto simplemente es por si se ha pulsado una imagen del inicio, para dar una pantalla de carga, si se da a pasar de página me la cargo
         if (cargando){
             setTimeout(()=>{
                 //Me cargo el último hijo de main para que no se me acumule, en este caso es la pantalla de carga
-                main.removeChild(main.lastChild);
-                //Para el tema de si vengo de favoritos
-                if (main.childNodes.length > 1){
-                    console.log("Hola");
-                    main.removeChild(main.lastChild);
-                }
+                //main.removeChild(main.lastChild);
                 //Creo el div del contenedor
                 const contenedorgaleria = document.createElement("div");
                 //Creo el div de la galeria
@@ -304,7 +299,8 @@ window.addEventListener('load',() =>{
                     footergaleria.appendChild(spanfootergaleria);
                     //Y por último le pongo un listener para que vuelva a llamar a esta función, pero con el campo cargando en false
                     spanfootergaleria.addEventListener('click',()=>{
-                        despliegueCartas(resultado,spanfootergaleria.textContent - 1,false);
+                        let numeroCartas = sacarValorCookie("ncartas");
+                        despliegueCartas(resultado,spanfootergaleria.textContent - 1,numeroCartas,false);
                     });
                     contador++;
                 }
@@ -318,15 +314,33 @@ window.addEventListener('load',() =>{
                 divselectgaleria.appendChild(spandivselectgaleria);
                 let selectgaleria = document.createElement("select");
                 let option1 = document.createElement("option");
-                option1.textContent = 5;
+                option1.textContent = 18;
                 let option2 = document.createElement("option");
-                option2.textContent = 10;
+                option2.textContent = 24;
                 let option3 = document.createElement("option");
-                option3.textContent = 15;
+                option3.textContent = 30;
                 let option4 = document.createElement("option");
-                option4.textContent = 20;
+                option4.textContent = 33;
                 let option5 = document.createElement("option");
-                option5.textContent = 25;
+                option5.textContent = 36;
+
+                switch(parseInt(sacarValorCookie("ncartas"))){
+                    case 18:
+                        option1.selected = true
+                    break;
+                    case 24:
+                        option2.selected = true
+                    break;
+                    case 30:
+                        option3.selected = true
+                    break;
+                    case 33:
+                        option4.selected = true
+                    break;
+                    case 36:
+                        option5.selected = true
+                    break;
+                }
                 selectgaleria.appendChild(option1);
                 selectgaleria.appendChild(option2);
                 selectgaleria.appendChild(option3);
@@ -345,6 +359,12 @@ window.addEventListener('load',() =>{
                 contenedorgaleria.className="contenedorgaleria";
                 //Lo introduzco en el main
                 main.append(contenedorgaleria);
+                //Siempre me carga esto antes del resto de cosas y por eso no me detecta nada, preguntarle a sergio
+                document.querySelector("select").addEventListener('change',(ev)=>{
+                    document.cookie = "ncartas="+ev.target.value;
+                    let numeroCartas = sacarValorCookie("ncartas");
+                    despliegueCartas(resultado,pagina,numeroCartas,true);
+                });
                 //Esto se hace 2 secs después de que se realice el fetch para que se cargue del todo y para que quede ciertamente estético
             },2000);
         }
@@ -375,7 +395,8 @@ window.addEventListener('load',() =>{
                 spanfootergaleria.className="spanfootergaleria";
                 footergaleria.appendChild(spanfootergaleria);
                 spanfootergaleria.addEventListener('click',()=>{
-                    despliegueCartas(resultado,spanfootergaleria.textContent - 1,false);
+                    let numeroCartas = sacarValorCookie("ncartas");
+                    despliegueCartas(resultado,spanfootergaleria.textContent - 1,numeroCartas,false);
                 });
                 contador++;
             }
@@ -387,15 +408,33 @@ window.addEventListener('load',() =>{
                 divselectgaleria.appendChild(spandivselectgaleria);
                 let selectgaleria = document.createElement("select");
                 let option1 = document.createElement("option");
-                option1.textContent = 5;
+                option1.textContent = 18;
                 let option2 = document.createElement("option");
-                option2.textContent = 10;
+                option2.textContent = 24;
                 let option3 = document.createElement("option");
-                option3.textContent = 15;
+                option3.textContent = 30;
                 let option4 = document.createElement("option");
-                option4.textContent = 20;
+                option4.textContent = 33;
                 let option5 = document.createElement("option");
-                option5.textContent = 25;
+                option5.textContent = 36;
+                //Para que se quede seleccionada la opción al haber cambiado
+                switch(parseInt(sacarValorCookie("ncartas"))){
+                    case 18:
+                        option1.selected = true
+                    break;
+                    case 24:
+                        option2.selected = true
+                    break;
+                    case 30:
+                        option3.selected = true
+                    break;
+                    case 33:
+                        option4.selected = true
+                    break;
+                    case 36:
+                        option5.selected = true
+                    break;
+                }
                 selectgaleria.appendChild(option1);
                 selectgaleria.appendChild(option2);
                 selectgaleria.appendChild(option3);
@@ -406,12 +445,22 @@ window.addEventListener('load',() =>{
                 divselectgaleria.className="divselectgaleria";
                 contenedorfootergaleria.appendChild(divselectgaleria);
                 contenedorfootergaleria.className="contenedorfootergaleria";
-            contenedorgaleria.appendChild(galeriacartas);
-            contenedorgaleria.appendChild(contenedorfootergaleria);
-            contenedorgaleria.className="contenedorgaleria";
-            main.append(contenedorgaleria); 
+                contenedorgaleria.appendChild(galeriacartas);
+                contenedorgaleria.appendChild(contenedorfootergaleria);
+                contenedorgaleria.className="contenedorgaleria";
+                main.append(contenedorgaleria); 
+            //Siempre me carga esto antes del resto de cosas y por eso no me detecta nada, preguntarle a sergio
+            document.querySelector("select").addEventListener('change',(ev)=>{
+                document.cookie = "ncartas="+ev.target.value;
+                let numeroCartas = sacarValorCookie("ncartas");
+                despliegueCartas(resultado,pagina,numeroCartas,false);
+            });
         }
     }
+    //Voy a ponerle un escuchador a la foto de arriba izquierda para recargar la página
+    document.querySelector(".logo").addEventListener('click',()=>{
+        location.href="";
+    });
     //Funcion para sacar un array con todos los ids de las cookies
     function generarArrayMazo (){
         const cookies = document.cookie.split(";");
@@ -423,7 +472,8 @@ window.addEventListener('load',() =>{
     }
     //Función para hacer el fetch de cada carta y meterlo en la galeria
     const generarDisposicionFavoritos = async (ids,galeria) => {
-            if (main.childNodes.length >= 3)
+            console.log(main.childNodes.length);
+            if (main.childNodes.length > 2)
             main.removeChild(main.lastChild);
             //Voy a poner un cargando porque va para largo
             const gifparrafo = document.createElement("div");
@@ -432,7 +482,7 @@ window.addEventListener('load',() =>{
             gifimagen.src="../img/logo.gif";
             gifimagen.alt="Spinner Logo";
             gifparrafo.appendChild(gifimagen)
-            main.append(gifparrafo);
+            main.appendChild(gifparrafo);
         for (let id of ids){
             //Creo cada imagen
             const foto = document.createElement("img");
@@ -463,9 +513,28 @@ window.addEventListener('load',() =>{
             }
         }
     }
+    //Función para sacar resultados de una búsqueda parcial de caracteres
+    const resultadosBusquedaParcial = async (nombre) =>{
+        const url = `https://omgvamp-hearthstone-v1.p.rapidapi.com/cards/search/${nombre}?collectible=1&locale=esES`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'a1c65baefdmsha5fe76334729909p147d7cjsnc4e4efdab8f0',
+                'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    };
     //Cookie para almacenar el número de cartas que se van a ver por página
     //Si no existe pongo un tamaño por defecto múltiplo de 3
-    if (document.cookie == ""){
+    if (!sacarValorCookie("ncartas")){
         document.cookie="ncartas=24";
     }
     let main = document.querySelector("main");
@@ -473,30 +542,37 @@ window.addEventListener('load',() =>{
     document.querySelector(".favoritos").addEventListener('click',()=>{
         if (main.childNodes.length >= 3)
             main.removeChild(main.lastChild);
-        //Compruebo si funciona
-        //console.log("Hola");
-        //Creo un nuevo div donde van a ir las cartas dentro        
-        const contenedorfavoritos = document.createElement("div");
-        contenedorfavoritos.className = "contenedorfavoritos";
-        const titulofavoritos = document.createElement("h3");
-        titulofavoritos.className = "titulofavoritos";
-        titulofavoritos.textContent = "Cartas Favoritas";
-        contenedorfavoritos.appendChild(titulofavoritos);
-        const galeriafavoritos = document.createElement("div");
-        galeriafavoritos.className = "resultado-cartas";
-        //Reutilizo la clase de los resultados
-        //Saco todos los ids de las cookies
-        const arrayIds = generarArrayMazo();
-        //Llamo a la función para hacer fetch de cada carta y meterlo en galeriafavoritos
-        generarDisposicionFavoritos(arrayIds,galeriafavoritos).then(()=>{
-            //En el momento acabe le hago un append a main de todo lo que he hecho
-            contenedorfavoritos.appendChild(galeriafavoritos);
-            main.removeChild(main.lastChild);
-            main.appendChild(contenedorfavoritos);
-        });
-
-
-
+        //Sacar un mensaje si no hay favoritos
+        if(!sacarValorCookie(" mazo")){
+            //console.log("funciona");
+            const divNoFavs = document.createElement("div");
+            divNoFavs.textContent = "No tienes ninguna carta en favoritos, !Empieza ahora mismo a elegir tu mazo!";
+            divNoFavs.className = "divNoFavs";
+            main.appendChild(divNoFavs);
+        }
+        else{
+            //Compruebo si funciona
+            //console.log("Hola");
+            //Creo un nuevo div donde van a ir las cartas dentro        
+            const contenedorfavoritos = document.createElement("div");
+            contenedorfavoritos.className = "contenedorfavoritos";
+            const titulofavoritos = document.createElement("h3");
+            titulofavoritos.className = "titulofavoritos";
+            titulofavoritos.textContent = "Cartas Favoritas";
+            contenedorfavoritos.appendChild(titulofavoritos);
+            const galeriafavoritos = document.createElement("div");
+            galeriafavoritos.className = "resultado-cartas";
+            //Reutilizo la clase de los resultados
+            //Saco todos los ids de las cookies
+            const arrayIds = generarArrayMazo();
+            //Llamo a la función para hacer fetch de cada carta y meterlo en galeriafavoritos
+            generarDisposicionFavoritos(arrayIds,galeriafavoritos).then(()=>{
+                //En el momento acabe le hago un append a main de todo lo que he hecho
+                contenedorfavoritos.appendChild(galeriafavoritos);
+                main.removeChild(main.lastChild);
+                main.appendChild(contenedorfavoritos);
+            });
+        }
     })
     //Cojo todas las imágenes que están en la galería, las almaceno en un array y también almaceno la llamada al DOM para sacar
     // el main en una variable, para ahorrarme futuras llamadas 
@@ -528,17 +604,102 @@ window.addEventListener('load',() =>{
                 //Llamo a la función y manejo la promesa
                 listadoExpansion(expansion).then(resultado=>{
                     //Tengo el problema de que se carga el gif después de los resultados de la consulta :(
+                    //Para el tema de si vengo de favoritos
+                    if (main.childNodes.length >= 3){
+                        //console.log("Hola");
+                        main.removeChild(main.lastChild);
+                    }
                     //Por tanto he tenido que hacer un setTimeout para que quede más estético simplemente
-                    despliegueCartas(resultado,0);
+                    let numeroCartas = sacarValorCookie("ncartas");
+                    console.log(numeroCartas);
+                    if (!numeroCartas){
+                        document.cookie = "ncartas=24";
+                        numeroCartas = 24;
+                    }
+                    console.log(numeroCartas);
+                    despliegueCartas(resultado,0,numeroCartas,true);
                 });
-                /*Siempre me carga esto antes del resto de cosas y por eso no me detecta nada, preguntarle a sergio
-                document.querySelector("select").addEventListener('change',()=>{
-                    console.log(this.value);
-                    despliegueCartas(resultado,pagina,false,this.value);
-                })*/
-
-
             }
-        })
+        });
+        //Le pongo un escuchador a la lupa para que aparezca el buscador en el main
+
+        document.getElementById("buscador").addEventListener("click",()=>{
+            if (main.childNodes.length > 1)
+                main.removeChild(main.lastChild);
+            //Ver si funciona, no sé por qué saca 6 Holas, preguntar a Sergio
+            //console.log("Hola");
+            if (main.childNodes.length == 1){
+            //Creo el div donde van el título y la barra
+            const divBusqueda = document.createElement("div");
+            divBusqueda.className = "divBusqueda";
+            const tituloBusqueda = document.createElement("h2");
+            tituloBusqueda.textContent = "Buscador de Cartas por Nombre";
+            divBusqueda.appendChild(tituloBusqueda);
+            const searchContainer = document.createElement("div");
+            searchContainer.className = "search-container";
+            //Creo el input en sí de la barra de búsqueda
+            const searchInput = document.createElement("input");
+            searchInput.type = "text";
+            searchInput.placeholder = "Busca tu carta";
+            searchInput.className = "search-input";
+            searchContainer.appendChild(searchInput);
+            //Creo el botón con la lupa
+            const searchButton = document.createElement("button");
+            searchButton.className = "search-button";
+            searchButton.textContent = "🔎";
+            //Le voy a poner un evento de keyup para hacerlo dinámico y bonito ya que estamos,que nunca está demás
+            searchButton.addEventListener('click',()=>{
+                    console.log(divBusqueda.childNodes.length);
+                    while (divBusqueda.childNodes.length > 2)
+                        divBusqueda.removeChild(divBusqueda.lastChild);
+                    //Probando si funciona
+                    //console.log("Hola");
+                    //Llamo a la función para que me devuelva resultados
+                    resultadosBusquedaParcial(searchInput.value).then((resultado)=>{
+                        //console.log(resultado);
+                        //Voy a hacer un pequeño filtro
+                        const resultadobueno = resultado.filter((elemento)=>{
+                            return elemento.img != null;
+                        });
+                        //console.log(resultadobueno);
+                        //Mostraré 5 resultados
+                        for (let i = 0; i < 5 && i < resultadobueno.length; i++){
+                            //Creo un div con fondo blanco para que resalte
+                            const divresultado = document.createElement("div");
+                            //Sus propios estilos
+                            divresultado.className = "divResultadoBusqueda";
+                            const imgresultado = document.createElement("img");
+                            imgresultado.src = resultadobueno[i].img;
+                            //Accesibilidad
+                            imgresultado.alt = resultadobueno[i].name;
+                            //La meto en el div
+                            divresultado.appendChild(imgresultado);
+                            //Ahora el nombre y la rareza
+                            const nombreresultado = document.createElement("span");
+                            const rarezaresultado = document.createElement("span");
+                            nombreresultado.textContent = resultadobueno[i].name;
+                            rarezaresultado.textContent = resultadobueno[i].rarity;
+                            //Los meto en el div que los va a contener con un flex
+                            const divdescripcion = document.createElement("div");
+                            divdescripcion.className = "divDescripcion";
+                            divdescripcion.appendChild(nombreresultado);
+                            divdescripcion.appendChild(rarezaresultado);
+                            divresultado.appendChild(divdescripcion);
+                            //Le meto su evento para que al hacer click te muestre la info de la carta correspondiente
+                            divresultado.addEventListener('click',()=>{
+                                mostrarCarta(resultadobueno[i].cardId);
+                            });
+                            divBusqueda.appendChild(divresultado);
+                        }
+                    });
+                
+            })
+            searchContainer.appendChild(searchButton);
+            //Lo meto en el div
+            divBusqueda.appendChild(searchContainer);
+            //Lo muestro en el main
+            main.appendChild(divBusqueda);
+            }
+        });
     }
 });
