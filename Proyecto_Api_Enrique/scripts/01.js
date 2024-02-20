@@ -243,12 +243,14 @@ window.addEventListener('load',() =>{
     }
     //Funcion para el despliegue de las cartas en pantalla
     function despliegueCartas (resultado,pagina,numcartas,cargando=true){
-        //Esto simplemente es por si se ha pulsado una imagen del inicio, para dar una pantalla de carga, si se da a pasar de página me la cargo
-        if (cargando){
-            setTimeout(()=>{
+                //Esto simplemente es por si se ha pulsado una imagen del inicio, para dar una pantalla de carga, si se da a pasar de página me la cargo
                 //Me cargo el último hijo de main para que no se me acumule, en este caso es la pantalla de carga
                 //main.removeChild(main.lastChild);
                 //Creo el div del contenedor
+                if (main.childNodes.length >= 3){
+                    //console.log("Hola");
+                    main.removeChild(main.lastChild);
+                }
                 const contenedorgaleria = document.createElement("div");
                 //Creo el div de la galeria
                 const galeriacartas = document.createElement("div");
@@ -365,101 +367,12 @@ window.addEventListener('load',() =>{
                     let numeroCartas = sacarValorCookie("ncartas");
                     despliegueCartas(resultado,pagina,numeroCartas,true);
                 });
-                //Esto se hace 2 secs después de que se realice el fetch para que se cargue del todo y para que quede ciertamente estético
-            },2000);
-        }
-        //Es literalmente lo mismo, pero quitando el Timeout para que cambie de página inmediatamente, porque lo de los 2 segundos queda bien para una vez solo
-        //Aparte aquí ya está cargado el fetch desde hace tiempo y lo veo una tontería
-        else{
-            main.removeChild(main.lastChild);
-            const contenedorgaleria = document.createElement("div");
-            const galeriacartas = document.createElement("div");
-            galeriacartas.className = "resultado-cartas";
-            let ncartas = sacarValorCookie("ncartas");
-            for(let i = numcartas * pagina; i < Number.parseInt(ncartas) + (numcartas * pagina) && i < resultado.length ;i++){
-                let foto = document.createElement("img");
-                foto.src=resultado[i].img;
-                foto.alt=resultado[i].name;
-                foto.className="carta";
-                foto.addEventListener('click',()=>{
-                    mostrarCarta(resultado[i].cardId);
-                });
-                galeriacartas.appendChild(foto);
-            }
-            let contenedorfootergaleria = document.createElement("div");
-            let footergaleria = document.createElement ("div");
-            let contador = 1;
-            while (resultado.length > ncartas * (contador - 1)){
-                let spanfootergaleria = document.createElement("span");
-                spanfootergaleria.textContent+= contador;
-                spanfootergaleria.className="spanfootergaleria";
-                footergaleria.appendChild(spanfootergaleria);
-                spanfootergaleria.addEventListener('click',()=>{
-                    let numeroCartas = sacarValorCookie("ncartas");
-                    despliegueCartas(resultado,spanfootergaleria.textContent - 1,numeroCartas,false);
-                });
-                contador++;
-            }
-            contador = 0;
-            footergaleria.className="footergaleria";
-                let divselectgaleria = document.createElement("div");
-                let spandivselectgaleria = document.createElement("span");
-                spandivselectgaleria.textContent = "Número de cartas por página: ";
-                divselectgaleria.appendChild(spandivselectgaleria);
-                let selectgaleria = document.createElement("select");
-                let option1 = document.createElement("option");
-                option1.textContent = 18;
-                let option2 = document.createElement("option");
-                option2.textContent = 24;
-                let option3 = document.createElement("option");
-                option3.textContent = 30;
-                let option4 = document.createElement("option");
-                option4.textContent = 33;
-                let option5 = document.createElement("option");
-                option5.textContent = 36;
-                //Para que se quede seleccionada la opción al haber cambiado
-                switch(parseInt(sacarValorCookie("ncartas"))){
-                    case 18:
-                        option1.selected = true
-                    break;
-                    case 24:
-                        option2.selected = true
-                    break;
-                    case 30:
-                        option3.selected = true
-                    break;
-                    case 33:
-                        option4.selected = true
-                    break;
-                    case 36:
-                        option5.selected = true
-                    break;
-                }
-                selectgaleria.appendChild(option1);
-                selectgaleria.appendChild(option2);
-                selectgaleria.appendChild(option3);
-                selectgaleria.appendChild(option4);
-                selectgaleria.appendChild(option5);
-                divselectgaleria.appendChild(selectgaleria);
-                contenedorfootergaleria.appendChild(footergaleria);
-                divselectgaleria.className="divselectgaleria";
-                contenedorfootergaleria.appendChild(divselectgaleria);
-                contenedorfootergaleria.className="contenedorfootergaleria";
-                contenedorgaleria.appendChild(galeriacartas);
-                contenedorgaleria.appendChild(contenedorfootergaleria);
-                contenedorgaleria.className="contenedorgaleria";
-                main.append(contenedorgaleria); 
-            //Siempre me carga esto antes del resto de cosas y por eso no me detecta nada, preguntarle a sergio
-            document.querySelector("select").addEventListener('change',(ev)=>{
-                document.cookie = "ncartas="+ev.target.value;
-                let numeroCartas = sacarValorCookie("ncartas");
-                despliegueCartas(resultado,pagina,numeroCartas,false);
-            });
-        }
     }
     //Voy a ponerle un escuchador a la foto de arriba izquierda para recargar la página
     document.querySelector(".logo").addEventListener('click',()=>{
-        location.href="";
+        while(main.childNodes.length > 2){
+            main.removeChild(main.lastChild);
+        }
     });
     //Funcion para sacar un array con todos los ids de las cookies
     function generarArrayMazo (){
@@ -603,13 +516,6 @@ window.addEventListener('load',() =>{
                 }
                 //Llamo a la función y manejo la promesa
                 listadoExpansion(expansion).then(resultado=>{
-                    //Tengo el problema de que se carga el gif después de los resultados de la consulta :(
-                    //Para el tema de si vengo de favoritos
-                    if (main.childNodes.length >= 3){
-                        //console.log("Hola");
-                        main.removeChild(main.lastChild);
-                    }
-                    //Por tanto he tenido que hacer un setTimeout para que quede más estético simplemente
                     let numeroCartas = sacarValorCookie("ncartas");
                     console.log(numeroCartas);
                     if (!numeroCartas){
@@ -624,11 +530,11 @@ window.addEventListener('load',() =>{
         //Le pongo un escuchador a la lupa para que aparezca el buscador en el main
 
         document.getElementById("buscador").addEventListener("click",()=>{
-            if (main.childNodes.length > 1)
+            if (main.childNodes.length > 2)
                 main.removeChild(main.lastChild);
             //Ver si funciona, no sé por qué saca 6 Holas, preguntar a Sergio
             //console.log("Hola");
-            if (main.childNodes.length == 1){
+            if (main.childNodes.length == 2){
             //Creo el div donde van el título y la barra
             const divBusqueda = document.createElement("div");
             divBusqueda.className = "divBusqueda";
