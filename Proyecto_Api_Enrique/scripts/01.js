@@ -205,19 +205,20 @@ window.addEventListener('load',() =>{
             const inputCheck = document.createElement("input");
             inputCheck.type="checkbox";
             //Si su id no está en las cookies no está checked el input y al pulsarle se guarda en las cookies
-            if (buscarIdCookie(infoCarta[0].cardId) == false){
+            console.log(document.cookie);
+            if (buscarIdCookie(infoCarta[0].cardId+"|"+infoCarta[0].img) == false){
                 inputCheck.addEventListener('click',()=>{
                     //si la cookie no está creada la creo con el valor
                     let buscarM = buscarMazo();
                     if (!buscarM){
-                        console.log("no encuentra");
-                        document.cookie = "mazo="+infoCarta[0].cardId+",";
+                        //console.log("no encuentra");
+                        document.cookie = "mazo="+infoCarta[0].cardId+"|"+infoCarta[0].img+",";
                         console.log(document.cookie);
                     }
                     //Si no saco todos los ids, concateno el nuevo y lo vuelvo a guardar
                     else{
-                        buscarM+=infoCarta[0].cardId;
-                        document.cookie = "mazo="+buscarM+",";
+                        buscarM+=infoCarta[0].cardId+"|"+infoCarta[0].img+",";
+                        document.cookie = "mazo="+buscarM;
                         console.log(document.cookie);
                     }
                 });
@@ -225,7 +226,7 @@ window.addEventListener('load',() =>{
             else {
                 inputCheck.checked = "true";
                 inputCheck.addEventListener('click',()=>{
-                    borrarIdCookie(infoCarta[0].cardId);
+                    borrarIdCookie(infoCarta[0].cardId+"|"+infoCarta[0].img);
                     console.log(document.cookie);
                 });
             }
@@ -389,62 +390,45 @@ window.addEventListener('load',() =>{
         }
     }
     //Función para hacer el fetch de cada carta y meterlo en la galeria
-    const generarDisposicionFavoritos = async (ids,galeria) => {
+    const generarDisposicionFavoritos = async (ids,galeriafavoritos,contenedorfavoritos) => {
             //console.log(main.childNodes.length);
             while (main.childNodes.length > 2){
                 //console.log("Hola");
                 main.removeChild(main.lastChild);
             }
-            //Voy a poner un cargando porque va para largo
-            const gifparrafo = document.createElement("div");
-            gifparrafo.className = "gif";
-            const gifimagen = document.createElement("img");
-            gifimagen.src="../img/logo.gif";
-            gifimagen.alt="Spinner Logo";
-            gifparrafo.appendChild(gifimagen)
-            main.appendChild(gifparrafo);
-        for (let id of ids){
+        for (let i = 0; i < ids.length -1;i++){
+            //De lo que hay dentro tengo que hacer una destructuración del split
+            let [id,img] = ids[i].split("|");
             //Creo cada imagen
             const foto = document.createElement("img");
             foto.className = "carta";
-            //Hago una petición por cada id, tengo que mirar si puedo mejorarlo
-            const url = `https://omgvamp-hearthstone-v1.p.rapidapi.com/cards/${id}?locale=esES`;
-            const options = {
-                method: 'GET',
-                headers: {
-                    'X-RapidAPI-Key': 'a1c65baefdmsha5fe76334729909p147d7cjsnc4e4efdab8f0',
-                    'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com'
-                }
-            };
-
-            try {
-                //Espero el fetch y meto los valores devueltos a la foto y la meto en la galería
-                const response = await fetch(url, options);
-                const result =  await response.json();
-                foto.addEventListener('click',()=>{
-                    mostrarCarta(result[0].cardId);
-                });
-                foto.src = result[0].img;
-                foto.alt = result[0].name;
-                galeria.appendChild(foto);
-            } catch (error) {
-                //Si no funciona veo el error que ha dado
-                console.error(error);
-            }
+            foto.addEventListener('click',()=>{
+                mostrarCarta(id);
+            });
+            foto.src = img;
+            foto.alt = id;
+            galeriafavoritos.appendChild(foto);
         }
+            //En el momento acabe le hago un append a main de todo lo que he hecho
+            contenedorfavoritos.appendChild(galeriafavoritos);
+            main.appendChild(contenedorfavoritos);
     }
     function finalizarJuego (divJuego){
         //Limpiando...
+        console.log(document.cookie);
         while(divJuego.childNodes.length > 2)
         divJuego.removeChild(divJuego.lastChild);
         //Un buen memazo
         const meme = document.createElement("img");
         meme.src = "../img/oscar.png";
-        meme.alt="perromeme";
+        meme.alt="oscarmeme";
         meme.className = "meme";
         divJuego.appendChild(meme);
         //saco el record de las cookies
+
         let record = parseInt(sacarValorCookie(" record"));
+        if (isNaN(record))
+            record = parseInt(sacarValorCookie("record"));
         //Me cargo el record para volver a usarlo si vuelve el usuario 
         document.cookie = "record=0";
         //creo un div donde va a ir la puntuación junto con una pequeña tabla de resultados
@@ -646,17 +630,14 @@ window.addEventListener('load',() =>{
             titulofavoritos.textContent = "Cartas Favoritas";
             contenedorfavoritos.appendChild(titulofavoritos);
             const galeriafavoritos = document.createElement("div");
-            galeriafavoritos.className = "resultado-cartas";
+            galeriafavoritos.className = "resultado-favs";
             //Reutilizo la clase de los resultados
             //Saco todos los ids de las cookies
             const arrayIds = generarArrayMazo();
+            console.log(arrayIds);
             //Llamo a la función para hacer fetch de cada carta y meterlo en galeriafavoritos
-            generarDisposicionFavoritos(arrayIds,galeriafavoritos).then(()=>{
-                //En el momento acabe le hago un append a main de todo lo que he hecho
-                contenedorfavoritos.appendChild(galeriafavoritos);
-                main.removeChild(main.lastChild);
-                main.appendChild(contenedorfavoritos);
-            });
+            generarDisposicionFavoritos(arrayIds,galeriafavoritos,contenedorfavoritos);
+
         }
     })
     //Cojo todas las imágenes que están en la galería, las almaceno en un array y también almaceno la llamada al DOM para sacar
