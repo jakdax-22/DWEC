@@ -1,5 +1,5 @@
 window.addEventListener('load',() =>{
-    console.log(document.cookie);
+    //console.log(document.cookie);
     /*Función para hacer la consulta a la API y obtener los datos de las cartas de cada expansión*/
     const listadoExpansion = async (expansion) =>{
         const url = `https://omgvamp-hearthstone-v1.p.rapidapi.com/cards/sets/${expansion}?collectible=1&locale=esES`;
@@ -269,7 +269,7 @@ window.addEventListener('load',() =>{
                 //Itero cada carta y muestro de 24 en 24 según el botón pulsado
                 //PD: Me he tirado 3 horas con errores por no hacerle un parseInt a ncartas, por lo que me concatenaba
                 //En vez de sumar y me daba que resultado[i].img no estaba definido :(((
-                    console.log(resultado);
+                    //console.log(resultado);
                 for(let i = numcartas * pagina; i < parseInt(ncartas) + (numcartas * pagina) && i < resultado.length ;i++){
                     //Depuración
                     /*console.log(ncartas + (24 * pagina));
